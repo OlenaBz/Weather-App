@@ -53,8 +53,9 @@
   margin: 0px 0px 30px 0px;
   margin-right: 3px;
 }
-.weater-temperature strong {
+.weater-temperature .temperature {
   font-size: 58px;
+  font-style: bold;
   color: #f03a17;
 }
 .weater-temperature .units {
