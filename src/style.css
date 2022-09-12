@@ -21,6 +21,9 @@
 .input-group {
   padding: 20px 20px 20px 20px;
 }
+button {
+  display: inline;
+}
 
 .row {
   padding: 20px;
@@ -55,7 +58,6 @@
 }
 .weater-temperature .temperature {
   font-size: 58px;
-  font-style: bold;
   color: #f03a17;
 }
 .weater-temperature .units {
