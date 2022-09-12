@@ -66,3 +66,28 @@ let buttonSearch = document.querySelector("#buttonSearch");
 buttonSearch.addEventListener("click", nowTemperature, showDate);
 let form = document.querySelector("#form");
 form.addEventListener("submit", nowTemperature, showDate);
+
+function showLocTemperature(response) {
+  let temperature = Math.round(response.data.main.temp);
+  let temperatureElement = document.querySelector("#nowTemperature");
+  temperatureElement.innerHTML = `${temperature}`;
+
+  let humidity = response.data.main.humidity;
+  let humidityElement = document.querySelector("#nowHumidity");
+  let wind = response.data.wind.speed;
+  humidityElement.innerHTML = `Humidity: ${humidity}%, wind: 2 m/s`;
+}
+function showPosition(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  axios.get(`${apiUrl}&appid=${apiKey}&units=metric}`).then(showLocTemperature);
+}
+
+function getCurrentPosition() {
+  navigator.geolocation.getCurrentPosition(showPosition);
+}
+
+let button = document.querySelector("#buttonLocation");
+button.addEventListener("click", getCurrentPosition);
