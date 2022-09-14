@@ -51,19 +51,30 @@ button {
   line-height: 85px;
   margin: 0px 5px 0px 0px;
 }
-.weater-temperature img {
+.weather-temperature img {
   height: 64px;
   margin: 0px 0px 30px 0px;
   margin-right: 3px;
 }
-.weater-temperature .temperature {
+.weather-temperature .temperature {
   font-size: 58px;
   color: #f03a17;
 }
-.weater-temperature .units {
+.weather-temperature .units {
   position: relative;
   font-size: 16;
   top: -28px;
+}
+.weather-temperature .active {
+  cursor: default;
+}
+.weather-temperature .active:hover {
+  color: #15133c;
+}
+
+a {
+  text-decoration: none;
+  color: #15133c;
 }
 .row5 {
   font-size: 18px;

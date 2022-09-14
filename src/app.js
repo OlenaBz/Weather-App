@@ -53,6 +53,7 @@ function nowTemperature(event) {
     let temperature = Math.round(response.data.main.temp);
     let temperatureElement = document.querySelector("#nowTemperature");
     temperatureElement.innerHTML = `${temperature}`;
+    celsiusTemperature = response.data.main.temp;
 
     let humidity = response.data.main.humidity;
     let humidityElement = document.querySelector("#nowHumidity");
@@ -71,7 +72,7 @@ function showLocTemperature(response) {
   let temperature = Math.round(response.data.main.temp);
   let temperatureElement = document.querySelector("#nowTemperature");
   temperatureElement.innerHTML = `${temperature}`;
-
+  celsiusTemperature = response.data.main.temp;
   let humidity = response.data.main.humidity;
   let humidityElement = document.querySelector("#nowHumidity");
   let wind = response.data.wind.speed;
@@ -88,6 +89,27 @@ function showPosition(position) {
 function getCurrentPosition() {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
+function showFahrenheitTemperature(event) {
+  event.preventDefault();
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  let temperatureElement = document.querySelector("#nowTemperature");
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
+function showCelsiusTemperature(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#nowTemperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+}
+
+let celsiusTemperature = null;
 
 let button = document.querySelector("#buttonLocation");
 button.addEventListener("click", getCurrentPosition);
+
+let fahrenheitLink = document.querySelector("#fahrenheitLink");
+fahrenheitLink.addEventListener("click", showFahrenheitTemperature);
+
+let celsiusLink = document.querySelector("#celsiusLink");
+celsiusLink.addEventListener("click", showCelsiusTemperature);
