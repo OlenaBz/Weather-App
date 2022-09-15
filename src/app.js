@@ -35,7 +35,9 @@ let months = [
 ];
 let month = months[now.getMonth()];
 let todayDate = document.querySelector("#todayTime");
-todayDate.innerHTML = ` ${month} ${date},${day} ${hours}:${minutes}`;
+todayDate.innerHTML = ` ${month} ${date},${day}`;
+let lastUpdate = document.querySelector("#lastUpdate");
+lastUpdate.innerHTML = `Last update: ${hours}:${minutes}`;
 
 function showDate() {
   let date = `${day} ${now.getHours()}`;
@@ -46,6 +48,7 @@ function nowTemperature(event) {
   let cityInput = document.querySelector("#cityInput");
   let city = document.querySelector("#city");
   city.innerHTML = `${cityInput.value}`;
+  cityInput.value = ``;
 
   let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}`;
@@ -101,6 +104,8 @@ function showCelsiusTemperature(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#nowTemperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 }
 
 let celsiusTemperature = null;

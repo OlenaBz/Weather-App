@@ -81,6 +81,14 @@ a {
   text-align: right;
   margin: 10px 60px 0px 0px;
 }
+.lastUpdate {
+  font-size: 14px;
+  text-align: center;
+  color: #73777b;
+  font-style: italic;
+  margin-top: 0px;
+  margin: 0px 5px 0px 0px;
+}
 .developer {
   color: #73777b;
   text-align: center;
