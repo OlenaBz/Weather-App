@@ -92,6 +92,25 @@ a {
   margin-top: 0px;
   margin: 0px 5px 0px 0px;
 }
+.weatherForecast {
+  text-align: center;
+  color: #15133c;
+  margin: 0px 0px 0px 5px;
+}
+.weatherForecastDate {
+  font-size: 13px;
+  margin-bottom: 2px;
+  color: #f03a17;
+  font-weight: bold;
+}
+
+.weatherForecastTemperature {
+  font-size: 13px;
+  margin-top: 3px;
+}
+.weatherForecastTemperatureMin {
+  opacity: 0.7;
+}
 .developer {
   color: #73777b;
   text-align: center;
