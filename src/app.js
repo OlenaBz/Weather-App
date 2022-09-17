@@ -34,11 +34,27 @@ let months = [
   "December",
 ];
 let month = months[now.getMonth()];
-let todayDate = document.querySelector("#todayTime");
-todayDate.innerHTML = ` ${month} ${date},${day}`;
+if (month === "October" || month === "November" || month === "September") {
+  document.getElementById("imageWeather").src = "images/fall.png";
+}
+if (month === "December" || month === "January" || month === "February") {
+  document.getElementById("imageWeather").src = "images/winter.png";
+}
+if (
+  month === "March" ||
+  month === "April" ||
+  month === "May" ||
+  month === "June" ||
+  month === "July" ||
+  month === "August"
+) {
+  document.getElementById("imageWeather").src = "images/Weather.png";
+}
+
 let lastUpdate = document.querySelector("#lastUpdate");
 lastUpdate.innerHTML = `Last update: ${hours}:${minutes}`;
-
+let todayDate = document.querySelector("#todayTime");
+todayDate.innerHTML = ` ${month} ${date}, ${day}`;
 function showDate() {
   let date = `${day} ${now.getHours()}`;
 }
@@ -48,7 +64,6 @@ function nowTemperature(event) {
   let cityInput = document.querySelector("#cityInput");
   let city = document.querySelector("#city");
   city.innerHTML = `${cityInput.value}`;
-  cityInput.value = ``;
 
   let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}`;
@@ -57,11 +72,32 @@ function nowTemperature(event) {
     let temperatureElement = document.querySelector("#nowTemperature");
     temperatureElement.innerHTML = `${temperature}`;
     celsiusTemperature = response.data.main.temp;
-
     let humidity = response.data.main.humidity;
     let humidityElement = document.querySelector("#nowHumidity");
     let wind = response.data.wind.speed;
     humidityElement.innerHTML = `Humidity: ${humidity}%, wind: 2 m/s`;
+
+    let clearnessElement = document.querySelector("#clearness");
+    let clearness = response.data.weather[0].main;
+    console.log(clearness);
+    if (clearness === "Clouds") {
+      clearnessElement.setAttribute("src", `images/cloudy.png`);
+    }
+    if (clearness === "Clear") {
+      clearnessElement.setAttribute("src", `images/sunny.png`);
+    }
+    if (clearness === "Rain") {
+      clearnessElement.setAttribute("src", `images/rainy.png`);
+    }
+    if (clearness === "Thunderstorm") {
+      clearnessElement.setAttribute("src", `images/thunderstorm.png`);
+    }
+    if (clearness === "Snow") {
+      clearnessElement.setAttribute("src", `images/snow.png`);
+    }
+    if (clearness === "Mist") {
+      clearnessElement.setAttribute("src", `images/mist.png`);
+    }
   }
 
   axios.get(`${apiUrl}&appid=${apiKey}&units=metric`).then(showTemperature);
@@ -80,6 +116,9 @@ function showLocTemperature(response) {
   let humidityElement = document.querySelector("#nowHumidity");
   let wind = response.data.wind.speed;
   humidityElement.innerHTML = `Humidity: ${humidity}%, wind: 2 m/s`;
+  let cityElement = document.querySelector("#city");
+  let city = response.data.name;
+  cityElement.innerHTML = `${city}`;
 }
 function showPosition(position) {
   let latitude = position.coords.latitude;

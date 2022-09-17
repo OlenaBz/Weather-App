@@ -17,7 +17,8 @@
   <body>
     <div class="wrapper">
       <div class="body">
-        <img src="images/weather.png" alt="" width="150" class="imageWeather" />
+        <img src="images/Weather.png" alt="" width="150" class="imageWeather" id="imageWeather"/>
+  
         <div class="input-group" id="form">
           <form action="submit" class="input-group">
           <input
@@ -46,13 +47,12 @@
           <div class="col">
             <div class="row3" id="city">Kyiv</div>
 
-            <div class="row2" id="todayTime">Wednesday, September 7</div>
             <div class="row2" id="nowHumidity">Humidity: 35%, wind: 2 m/s</div>
             <div class="row2" id="lastUpdate">Last update:</div>
-          </div>
+                      <div class="row2" id="todayTime">Wednesday, September 7</div></div>
           <div class="col">
             <div class="row4 weather-temperature">
-              <img src="images/sunny.png" alt="" /><span
+              <img src="images/sunny.png" alt="" class="clearness" id="clearness"/><span
                 class="temperature"
                 id="nowTemperature"
                 >13</span
