@@ -35,6 +35,9 @@ button {
   margin-bottom: 0px;
   margin: 0px 0px 0px 5px;
 }
+.row3:first-letter {
+  text-transform: capitalize;
+}
 .row2 {
   font-size: 14px;
   text-align: left;
