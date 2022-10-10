@@ -79,7 +79,7 @@ function nowTemperature(event) {
 
     let clearnessElement = document.querySelector("#clearness");
     let clearness = response.data.weather[0].main;
-    console.log(clearness);
+
     if (clearness === "Clouds") {
       clearnessElement.setAttribute("src", `images/cloudy.png`);
     }
@@ -107,6 +107,25 @@ buttonSearch.addEventListener("click", nowTemperature, showDate);
 let form = document.querySelector("#form");
 form.addEventListener("submit", nowTemperature, showDate);
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  let days = ["Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+  <div class="col-2"> 
+    <div class="weatherForecastDate">${day}</div>
+    <img src="images/snow.png" alt="" width="40" class="imageForecast">
+    <div class="weatherForecastTemperature"><span class="weatherForecastTemperatureMax">18°</span><span class="weatherForecastTemperatureMin">12°</span></div>
+  </div>
+`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function showLocTemperature(response) {
   let temperature = Math.round(response.data.main.temp);
   let temperatureElement = document.querySelector("#nowTemperature");
@@ -119,6 +138,28 @@ function showLocTemperature(response) {
   let cityElement = document.querySelector("#city");
   let city = response.data.name;
   cityElement.innerHTML = `${city}`;
+
+  let clearnessElement = document.querySelector("#clearness");
+  let clearness = response.data.weather[0].main;
+
+  if (clearness === "Clouds") {
+    clearnessElement.setAttribute("src", `images/cloudy.png`);
+  }
+  if (clearness === "Clear") {
+    clearnessElement.setAttribute("src", `images/sunny.png`);
+  }
+  if (clearness === "Rain") {
+    clearnessElement.setAttribute("src", `images/rainy.png`);
+  }
+  if (clearness === "Thunderstorm") {
+    clearnessElement.setAttribute("src", `images/thunderstorm.png`);
+  }
+  if (clearness === "Snow") {
+    clearnessElement.setAttribute("src", `images/snow.png`);
+  }
+  if (clearness === "Mist") {
+    clearnessElement.setAttribute("src", `images/mist.png`);
+  }
 }
 function showPosition(position) {
   let latitude = position.coords.latitude;
@@ -148,6 +189,7 @@ function showCelsiusTemperature(event) {
 }
 
 let celsiusTemperature = null;
+displayForecast();
 
 let button = document.querySelector("#buttonLocation");
 button.addEventListener("click", getCurrentPosition);
