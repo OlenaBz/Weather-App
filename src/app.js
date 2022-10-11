@@ -69,12 +69,12 @@ function nowTemperature(event) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}`;
 
   function getForecast(coordinates) {
-    console.log(coordinates);
-    let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-    //api.openweathermap.org/data/3.0/onecall?lat=&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-    console.log(apiUrl);
+    let lat = coordinates.lat;
+    let lon = coordinates.lon;
+    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayForecast);
+    console.log(apiUrl);
   }
 
   function showTemperature(response) {
@@ -118,23 +118,60 @@ buttonSearch.addEventListener("click", nowTemperature, showDate);
 let form = document.querySelector("#form");
 form.addEventListener("submit", nowTemperature, showDate);
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
 function displayForecast(response) {
-  console.log(response.data.list);
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
-  let days = ["Thu", "Fri", "Sat"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `  <div class="col-2"> 
-    <div class="weatherForecastDate">${day}</div>
-    <img src="images/snow.png" alt="" width="40" class="imageForecast">
-    <div class="weatherForecastTemperature"><span class="weatherForecastTemperatureMax">18°</span><span class="weatherForecastTemperatureMin">12°</span></div>
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 7 && index > 0) {
+      forecastHTML =
+        forecastHTML +
+        `  <div class="col-2"> 
+    <div class="weatherForecastDate">${formatDay(forecastDay.dt)}</div>
+    <img src="images/snow.png" alt="" width="40" class="imageForecast" id="imageForecast">
+    <div class="weatherForecastTemperature"><span class="weatherForecastTemperatureMax"> <span class="weather-forecast-temperature-max"> ${Math.round(
+      forecastDay.temp.max
+    )}° </span>
+          <span class="weather-forecast-temperature-min"> ${Math.round(
+            forecastDay.temp.min
+          )}° </span></div>
   </div>
 `;
+    }
   });
+
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+
+  let clearnessForElement = document.querySelector("#imageForecast");
+  let clearness = response.data.weather[0].main;
+  console.log(clearness);
+
+  if (clearness === "Clouds") {
+    clearnessForElement.setAttribute("src", `images/cloudy.png`);
+  }
+  if (clearness === "Clear") {
+    clearnessForElement.setAttribute("src", `images/sunny.png`);
+  }
+  if (clearness === "Rain") {
+    clearnessForElement.setAttribute("src", `images/rainy.png`);
+  }
+  if (clearness === "Thunderstorm") {
+    clearnessForElement.setAttribute("src", `images/thunderstorm.png`);
+  }
+  if (clearness === "Snow") {
+    clearnessForElement.setAttribute("src", `images/snow.png`);
+  }
+  if (clearness === "Mist") {
+    clearnessForElement.setAttribute("src", `images/mist.png`);
+  }
 }
 
 function showLocTemperature(response) {
