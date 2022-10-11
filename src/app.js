@@ -67,6 +67,16 @@ function nowTemperature(event) {
 
   let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}`;
+
+  function getForecast(coordinates) {
+    console.log(coordinates);
+    let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    //api.openweathermap.org/data/3.0/onecall?lat=&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(displayForecast);
+  }
+
   function showTemperature(response) {
     let temperature = Math.round(response.data.main.temp);
     let temperatureElement = document.querySelector("#nowTemperature");
@@ -98,6 +108,7 @@ function nowTemperature(event) {
     if (clearness === "Mist") {
       clearnessElement.setAttribute("src", `images/mist.png`);
     }
+    getForecast(response.data.coord);
   }
 
   axios.get(`${apiUrl}&appid=${apiKey}&units=metric`).then(showTemperature);
@@ -107,15 +118,15 @@ buttonSearch.addEventListener("click", nowTemperature, showDate);
 let form = document.querySelector("#form");
 form.addEventListener("submit", nowTemperature, showDate);
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.list);
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
   let days = ["Thu", "Fri", "Sat"];
   days.forEach(function (day) {
     forecastHTML =
       forecastHTML +
-      `
-  <div class="col-2"> 
+      `  <div class="col-2"> 
     <div class="weatherForecastDate">${day}</div>
     <img src="images/snow.png" alt="" width="40" class="imageForecast">
     <div class="weatherForecastTemperature"><span class="weatherForecastTemperatureMax">18°</span><span class="weatherForecastTemperatureMin">12°</span></div>
@@ -189,7 +200,6 @@ function showCelsiusTemperature(event) {
 }
 
 let celsiusTemperature = null;
-displayForecast();
 
 let button = document.querySelector("#buttonLocation");
 button.addEventListener("click", getCurrentPosition);
