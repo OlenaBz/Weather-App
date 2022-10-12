@@ -61,7 +61,7 @@ button {
 }
 .weather-temperature .temperature {
   font-size: 58px;
-  color: #f03a17;
+  color: #ec6e4c;
 }
 .weather-temperature .units {
   position: relative;
@@ -100,7 +100,7 @@ a {
 .weatherForecastDate {
   font-size: 13px;
   margin-bottom: 2px;
-  color: #f03a17;
+  color: #ec6e4c;
   font-weight: bold;
 }
 
