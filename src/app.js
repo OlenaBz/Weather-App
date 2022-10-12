@@ -155,29 +155,6 @@ function displayForecast(response) {
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
-
-  let clearnessForElement = document.querySelector("#imageForecast");
-  let clearness = response.data.weather[0].main;
-  console.log(clearness);
-
-  if (clearness === "Clouds") {
-    clearnessForElement.setAttribute("src", `images/cloudy.png`);
-  }
-  if (clearness === "Clear") {
-    clearnessForElement.setAttribute("src", `images/sunny.png`);
-  }
-  if (clearness === "Rain") {
-    clearnessForElement.setAttribute("src", `images/rainy.png`);
-  }
-  if (clearness === "Thunderstorm") {
-    clearnessForElement.setAttribute("src", `images/thunderstorm.png`);
-  }
-  if (clearness === "Snow") {
-    clearnessForElement.setAttribute("src", `images/snow.png`);
-  }
-  if (clearness === "Mist") {
-    clearnessForElement.setAttribute("src", `images/mist.png`);
-  }
 }
 
 function showLocTemperature(response) {
