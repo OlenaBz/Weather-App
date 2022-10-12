@@ -58,6 +58,60 @@ todayDate.innerHTML = ` ${month} ${date}, ${day}`;
 function showDate() {
   let date = `${day} ${now.getHours()}`;
 }
+function cityDefault(event) {
+  event.preventDefault();
+  let cityInput = document.querySelector("#cityInput");
+  let city = document.querySelector("#city");
+  city.innerHTML = `Kyiv`;
+
+  let apiKey = "a2a8582acba62566c4fd2c9a487348b8";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Kyiv`;
+
+  function getForecast(coordinates) {
+    let lat = coordinates.lat;
+    let lon = coordinates.lon;
+    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayForecast);
+    console.log(apiUrl);
+  }
+
+  function showTemperature(response) {
+    let temperature = Math.round(response.data.main.temp);
+    let temperatureElement = document.querySelector("#nowTemperature");
+    temperatureElement.innerHTML = `${temperature}`;
+    celsiusTemperature = response.data.main.temp;
+    let humidity = response.data.main.humidity;
+    let humidityElement = document.querySelector("#nowHumidity");
+    let wind = response.data.wind.speed;
+    humidityElement.innerHTML = `Humidity: ${humidity}%, wind: 2 m/s`;
+
+    let clearnessElement = document.querySelector("#clearness");
+    let clearness = response.data.weather[0].main;
+
+    if (clearness === "Clouds") {
+      clearnessElement.setAttribute("src", `images/cloudy.png`);
+    }
+    if (clearness === "Clear") {
+      clearnessElement.setAttribute("src", `images/sunny.png`);
+    }
+    if (clearness === "Rain") {
+      clearnessElement.setAttribute("src", `images/rainy.png`);
+    }
+    if (clearness === "Thunderstorm") {
+      clearnessElement.setAttribute("src", `images/thunderstorm.png`);
+    }
+    if (clearness === "Snow") {
+      clearnessElement.setAttribute("src", `images/snow.png`);
+    }
+    if (clearness === "Mist") {
+      clearnessElement.setAttribute("src", `images/mist.png`);
+    }
+    getForecast(response.data.coord);
+  }
+
+  axios.get(`${apiUrl}&appid=${apiKey}&units=metric`).then(showTemperature);
+}
 
 function nowTemperature(event) {
   event.preventDefault();
@@ -209,10 +263,11 @@ function showCelsiusTemperature(event) {
   let temperatureElement = document.querySelector("#nowTemperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
   celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
 }
 
 let celsiusTemperature = null;
 
 let button = document.querySelector("#buttonLocation");
 button.addEventListener("click", getCurrentPosition);
+
+document.addEventListener("DOMContentLoaded", cityDefault);
